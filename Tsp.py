@@ -92,22 +92,22 @@ def draw_H_and_E(citys, H_path, energys):
     plt.xlim(0, 7)
     plt.ylim(0, 7)
     for (from_, to_) in H_path:
-        p1 = plt.Circle(citys[from_], 0.2, color='red')
-        p2 = plt.Circle(citys[to_], 0.2, color='red')
+        p1 = plt.Circle(citys[from_], 0.2, color='yellow')
+        p2 = plt.Circle(citys[to_], 0.2, color='yellow')
         ax1.add_patch(p1)
         ax1.add_patch(p2)
-        ax1.plot((citys[from_][0], citys[to_][0]), (citys[from_][1], citys[to_][1]), color='red')
-        ax1.annotate(s=chr(97 + to_), xy=citys[to_], xytext=(-8, -4), textcoords='offset points', fontsize=20)
+        ax1.plot((citys[from_][0], citys[to_][0]), (citys[from_][1], citys[to_][1]), color='black')
+        ax1.annotate(s=chr(97 + to_), xy=citys[to_], xytext=(-8, -4), textcoords='offset points', fontsize=15)
     ax1.axis('equal')
     ax1.grid()
     # 绘制能量趋势图
     ax2 = fig.add_subplot(122)
-    ax2.plot(np.arange(0, len(energys), 1), energys, color='red')
+    ax2.plot(np.arange(0, len(energys), 1), energys, color='blue', linewidth=0.5)
     plt.show()
 
 
 if __name__ == '__main__':
-    cities = np.array([[2, 8], [2, 4], [1, 3], [4, 6], [5, 5], [5,1], [6, 4], [3, 2]])
+    cities = np.array([[2, 8], [2, 4], [1, 3], [4, 6], [5, 4], [5,8], [6, 4], [3, 2]])
     distance = get_distance(cities)
     N = len(cities)
     # 设置初始值
