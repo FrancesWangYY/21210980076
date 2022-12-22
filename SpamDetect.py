@@ -29,7 +29,7 @@ def load_files_from_dir(rootdir):
 def load_all_files():
     ham=[]
     spam=[]
-    for i in range(1,3): #(1,6)
+    for i in range(1,3): #(1,6) 运行速度过慢
         path="data/enron"+str(i)+"/ham/"
         print ("Load %s" %path)
         ham+=load_files_from_dir(path)
@@ -74,7 +74,7 @@ def get_features_by_wordbag_tfidf():
 
 def do_svm_wordbag(x_train, x_test, y_train, y_test):
     print ("SVM and wordbag")
-    clf = svm.SVC()
+    clf = svm.SVC(kernel='linear')
     clf.fit(x_train, y_train)
     y_pred = clf.predict(x_test)
     print (metrics.accuracy_score(y_test, y_pred))
@@ -107,19 +107,23 @@ def do_dnn_wordbag(x_train, x_test, y_train, y_testY):
 max_features=8000
 max_document_length=100
 
-x,y=get_features_by_wordbag()
-# x,y = get_features_by_wordbag_tfidf()
+# x,y=get_features_by_wordbag()
+x,y = get_features_by_wordbag_tfidf()
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.25, random_state = 0)
 
-# do_svm_wordbag(x_train, x_test, y_train, y_test)
+do_svm_wordbag(x_train, x_test, y_train, y_test)
 # do_nb_wordbag(x_train, x_test, y_train, y_test)
-do_dnn_wordbag(x_train, x_test, y_train, y_test)
+# do_dnn_wordbag(x_train, x_test, y_train, y_test)
 
 """wordbag
-SVM and wordbag
+SVM and wordbag-rbf
 0.9699057287889775
 [[1959   31] 
  [  52  716]]
+SVM and wordbag-linear
+0.9673676577229877
+[[1935   55]
+ [  35  733]]
 NB and wordbag
 0.9423495286439448
 [[1883  107]   
@@ -131,10 +135,14 @@ DNN and wordbag
 """
 
 """tfidf
-SVM and wordbag
+SVM and wordbag-rbf
 0.9836838288614939
 [[1971   19] 
  [  26  742]]
+SVM and wordbag-linear
+0.9851341551849166
+[[1969   21]
+ [  20  748]]
 NB and wordbag
 0.9601160261058739
 [[1955   35]
